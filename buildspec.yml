@@ -8,6 +8,7 @@ phases:
     commands:
       - echo "Building Spring Boot project with Maven"
       - mvn clean install -DskipTests
+
 artifacts:
   files:
-    - target/*.jar
+    - target/*.jar  # build result jar file

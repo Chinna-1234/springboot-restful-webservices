@@ -21,11 +21,12 @@ spec:
     spec:
       containers:
         - name: springboot-app-container
-          # ⚠️ CRITICAL: REPLACE <YOUR_ECR_URI> with your AWS ECR address!
-          # <PLACEHOLDER_TAG> is automatically replaced by the buildspec.yml
-          image: <961581626265>/springboot-restful-webservices:<PLACEHOLDER_TAG>
+          # ⚠️ CRITICAL: Full ECR URI including region
+          # <PLACEHOLDER_TAG> is automatically replaced by buildspec.yml
+          image: 961581626265.dkr.ecr.ap-south-1.amazonaws.com/springboot-restful-webservices:<PLACEHOLDER_TAG>
           ports:
             - containerPort: 8080 # The internal port your Spring Boot app listens on
+
 ---
 # ----------------------------------------------------------------------
 # 2. KUBERNETES SERVICE: Exposes the Deployment using an AWS Load Balancer

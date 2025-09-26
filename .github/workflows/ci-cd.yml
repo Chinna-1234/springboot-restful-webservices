@@ -1,0 +1,48 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build Maven project
+      run: mvn clean install -DskipTests
+
+    - name: Build Docker Image
+      run: |
+        docker build -t springboot-restful-webservices:${{ github.sha }} .
+        docker tag springboot-restful-webservices:${{ github.sha }} 961581626265.dkr.ecr.ap-south-1.amazonaws.com/springboot-restful-webservices:${{ github.sha }}
+
+    - name: Login to AWS ECR
+      env:
+        AWS_REGION: ap-south-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 961581626265.dkr.ecr.$AWS_REGION.amazonaws.com
+
+    - name: Push Docker Image to ECR
+      run: |
+        docker push 961581626265.dkr.ecr.ap-south-1.amazonaws.com/springboot-restful-webservices:${{ github.sha }}
+
+    - name: Deploy to EKS
+      env:
+        AWS_REGION: ap-south-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws eks update-kubeconfig --name Chinna_cluster1 --region $AWS_REGION
+        sed -i "s|<PLACEHOLDER_TAG>|${{ github.sha }}|" k8s/deployment.yaml
+        kubectl apply -f k8s/deployment.yaml

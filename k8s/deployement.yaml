@@ -9,7 +9,6 @@ metadata:
   labels:
     app: springboot-microservice
 spec:
-  # Maintain 2 replicas (copies) of your application at all times
   replicas: 2
   selector:
     matchLabels:
@@ -21,11 +20,17 @@ spec:
     spec:
       containers:
         - name: springboot-app-container
-          # ⚠️ CRITICAL: Full ECR URI including region
-          # <PLACEHOLDER_TAG> is automatically replaced by buildspec.yml
           image: 961581626265.dkr.ecr.ap-south-1.amazonaws.com/springboot-restful-webservices:<PLACEHOLDER_TAG>
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080 # The internal port your Spring Boot app listens on
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
 
 ---
 # ----------------------------------------------------------------------
@@ -38,11 +43,10 @@ metadata:
   labels:
     app: springboot-microservice
 spec:
-  # 'LoadBalancer' type creates an AWS Classic Load Balancer to expose the app publicly
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 80         # The port exposed externally (e.g., accessed via browser)
-      targetPort: 8080 # The port inside the container (8080)
+      port: 80
+      targetPort: 8080
   selector:
-    app: springboot-microservice # Selects the Pods created by the Deployment above
+    app: springboot-microservice

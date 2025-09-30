@@ -11,6 +11,7 @@
 	<groupId>net.javaguides</groupId>
 	<artifactId>springboot-restful-webservices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>springboot-restful-webservices</name>
 	<description>Demo project for Spring Boot Restful Webservices</description>
 	<url/>
@@ -74,11 +75,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>net.javaguides.springboot.SpringbootRestfulWebservicesApplication</mainClass>
+
 					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
+
 					</excludes>
 				</configuration>
 			</plugin>

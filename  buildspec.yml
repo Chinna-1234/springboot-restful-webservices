@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Build completed"
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**/*
+    - target/springboot-restful-webservices-0.0.1-SNAPSHOT.jar

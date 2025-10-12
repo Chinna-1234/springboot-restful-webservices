@@ -1,16 +1,29 @@
+
 version: 0.0
 os: linux
 files:
-  - source: target/springboot-restful-webservices-0.0.1-SNAPSHOT.jar
+  - source: app.jar
     destination: /home/ec2-user/app
   - source: scripts/
     destination: /home/ec2-user/app/scripts
 hooks:
+  BeforeInstall:
+    - location: scripts/prereqs.sh
+      timeout: 180
+      runas: root
   ApplicationStop:
     - location: scripts/stop.sh
       timeout: 180
       runas: ec2-user
+  AfterInstall:
+    - location: scripts/permissions.sh
+      timeout: 60
+      runas: root
   ApplicationStart:
     - location: scripts/start.sh
       timeout: 180
+      runas: ec2-user
+  ValidateService:
+    - location: scripts/healthcheck.sh
+      timeout: 60
       runas: ec2-user

@@ -1,2 +1,7 @@
-#!/bin/bash
-nohup java -jar /home/ec2-user/app/springboot-restful-webservices-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
+#!/usr/bin/env bash
+set -e
+APP_DIR=/home/ec2-user/app
+JAR="$APP_DIR/app.jar"
+# optional: pkill previous if not stopped
+pkill -f "$JAR" || true
+nohup java -jar "$JAR" > "$APP_DIR/app.log" 2>&1 &

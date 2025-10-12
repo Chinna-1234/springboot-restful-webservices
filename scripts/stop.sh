@@ -1,2 +1,2 @@
-#!/bin/bash
-pkill -f springboot-restful-webservices-0.0.1-SNAPSHOT.jar
+#!/usr/bin/env bash
+pkill -f "/home/ec2-user/app/app.jar" || true

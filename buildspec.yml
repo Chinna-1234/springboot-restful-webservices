@@ -1,16 +1,16 @@
-  version: 0.2
-  phases:
-    install:
-      runtime-versions:
-        java: corretto17
-    build:
-      commands:
-        - mvn -B -DskipTests package
-        - mkdir -p artifact
-        - cp target/*-SNAPSHOT.jar artifact/app.jar || cp target/*.jar artifact/app.jar
-  artifacts:
-    files:
-      - appspec.yml
-      - scripts/**/*
-      - artifact/app.jar
-    discard-paths: yes
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+  build:
+    commands:
+      - mvn -B -DskipTests package
+      - mkdir -p artifact
+      - cp target/*.jar artifact/app.jar
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**/*
+    - artifact/app.jar
+  discard-paths: yes

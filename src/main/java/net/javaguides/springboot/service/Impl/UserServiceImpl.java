@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import net.javaguides.springboot.entity.User;
 import net.javaguides.springboot.repository.UserRepository;
 import net.javaguides.springboot.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
 import java.util.Optional;

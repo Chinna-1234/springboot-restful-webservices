@@ -21,7 +21,7 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://chinna-db.c5e48eui694i.ap-south-1.rds.amazonaws.com:3306/user_management
+              value: jdbc:mysql://babu-db.c5e48eui694i.ap-south-1.rds.amazonaws.com:3306/user_management
             - name: SPRING_DATASOURCE_USERNAME
               value: root
             - name: SPRING_DATASOURCE_PASSWORD

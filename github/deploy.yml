@@ -18,8 +18,14 @@ jobs:
         with:
           java-version: '17'
 
+#      - name: Build with Maven
+#        run: ./mvnw package
+
+      - name: Make mvnw executable
+        run: chmod +x mvnw
+
       - name: Build with Maven
-        run: ./mvnw package
+        run: ./mvnw clean install
 
       - name: Build Docker image
         run: |
